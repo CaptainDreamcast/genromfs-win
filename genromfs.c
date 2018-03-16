@@ -590,6 +590,8 @@ int alignnode(struct filenode *node, int curroffset, int extraspace) {
 	return curroffset;
 }
 
+static int debugIno = 0;
+
 int processdir(int level, const char *base, const char *dirname, struct stat *sb,
 	struct filenode *dir, struct filenode *root, int curroffset) {
 	DIR *dirfd;
@@ -627,7 +629,6 @@ int processdir(int level, const char *base, const char *dirname, struct stat *sb
 
 	dirfd = opendir(dir->realname);
 
-	int debugIno = 0;
 	while ((dp = readdir(dirfd))) {
 		/* don't process main . and .. twice */
 		if (level <= 1 &&
@@ -708,7 +709,7 @@ int processdir(int level, const char *base, const char *dirname, struct stat *sb
 			}
 		}
 
-		sb->st_ino = debugIno++;
+		sb->st_ino = ++debugIno;
 		setnode(n, sb->st_dev, sb->st_ino, sb->st_mode);
 
 		/* Skip unreadable files/dirs */
