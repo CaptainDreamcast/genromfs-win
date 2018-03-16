@@ -1,4 +1,4 @@
-#define VERSION "sdsd"
+#define VERSION "0.5.1"
 
 /* Generate a ROMFS file system
  *
